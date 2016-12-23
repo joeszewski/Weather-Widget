@@ -14,6 +14,8 @@ let WeatherComponent = class WeatherComponent {
     constructor(service) {
         this.service = service;
         this.service.getCurrentLocation();
+        this.service.getCurrentWeather(0, 0)
+            .subscribe(weather => console.log(weather), err => console.error(err));
     }
 };
 WeatherComponent = __decorate([
