@@ -7,20 +7,22 @@ import 'rxjs/add/operator/catch';
 import { FORECAST_KEY, FORECAST_ROOT } from '../constants/constants';
 
 @Injectable()
-export class WeatherService { 
+export class WeatherService {
 
     constructor(private jsonp: Jsonp) { }
 
-    getCurrentLocation(): [number, number] {
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(pos => {
-                console.log("Postion: ", pos.coords.latitude, ",", pos.coords.longitude); // TODO: REMOVE
-                return [pos.coords.latitude, pos.coords.longitude];
-            },
-            err => console.error("Unable to get the position - ", err));
+    getCurrentLocation(): Observable<any> {
+        if (navigator.geolocation) {
+            return Observable.create(observer => {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    observer.next(pos)
+                }),
+                    err => {
+                        return Observable.throw(err);
+                    }
+            });
         } else {
-            console.error("Gelocation is not available.  Update your browser!");
-            return [0, 0];
+            return Observable.throw("Gelocation is not available.  Update your browser!");
         }
     }
 
@@ -28,11 +30,11 @@ export class WeatherService {
         const url = FORECAST_ROOT + FORECAST_KEY + "/" + lat + "," + long;
         const queryParams = "?callback=JSONP_CALLBACK";
 
-        return  this.jsonp.get(url + queryParams)
-        .map(data => data.json())
-        .catch(err => {
-            console.error("Unable to get weather data - ", err);
-            return Observable.throw(err.json())
-        });
+        return this.jsonp.get(url + queryParams)
+            .map(data => data.json())
+            .catch(err => {
+                console.error("Unable to get weather data - ", err);
+                return Observable.throw(err.json())
+            });
     }
 }

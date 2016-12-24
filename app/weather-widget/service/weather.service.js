@@ -20,14 +20,17 @@ let WeatherService = class WeatherService {
     }
     getCurrentLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(pos => {
-                console.log("Postion: ", pos.coords.latitude, ",", pos.coords.longitude); // TODO: REMOVE
-                return [pos.coords.latitude, pos.coords.longitude];
-            }, err => console.error("Unable to get the position - ", err));
+            return Observable_1.Observable.create(observer => {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    observer.next(pos);
+                }),
+                    err => {
+                        return Observable_1.Observable.throw(err);
+                    };
+            });
         }
         else {
-            console.error("Gelocation is not available.  Update your browser!");
-            return [0, 0];
+            return Observable_1.Observable.throw("Gelocation is not available.  Update your browser!");
         }
     }
     getCurrentWeather(lat, long) {
