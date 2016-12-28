@@ -9,22 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require('@angular/core');
-let SpeedUnitPipe = class SpeedUnitPipe {
-    transform(speed, unitType) {
-        switch (unitType) {
-            case "mph":
-                const miles = speed * 1.6;
-                return miles + " mph";
+let TempUnitPipe = class TempUnitPipe {
+    transform(temp, tempUnit) {
+        switch (tempUnit) {
+            case "celsius":
+                const celsius = (temp - 32) * 0.5556;
+                return celsius;
             default:
-                return speed + " kph";
+                return temp;
         }
     }
 };
-SpeedUnitPipe = __decorate([
+TempUnitPipe = __decorate([
     core_1.Pipe({
-        name: 'speedUnit'
+        name: 'tempUnit'
     }), 
     __metadata('design:paramtypes', [])
-], SpeedUnitPipe);
-exports.SpeedUnitPipe = SpeedUnitPipe;
-//# sourceMappingURL=speed-unit.pipe.js.map
+], TempUnitPipe);
+exports.TempUnitPipe = TempUnitPipe;
+//# sourceMappingURL=temp-unit.pipe.js.map
