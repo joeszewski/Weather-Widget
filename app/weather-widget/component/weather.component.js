@@ -18,6 +18,7 @@ let WeatherComponent = class WeatherComponent {
         this.currentSpeedUnit = "mph";
         this.currentTempUnit = "fahrenheit";
         this.currentLocation = "";
+        this.icons = new Skycons({ "color": "#FFF" });
     }
     ngOnInit() {
         this.getCurrentLocation();
@@ -39,6 +40,7 @@ let WeatherComponent = class WeatherComponent {
                 this.weatherData.humidity = weather["currently"]["humidity"],
                 this.weatherData.icon = weather["currently"]["icon"];
             console.log("Weather: ", this.weatherData); //TODO: REMOVE
+            this.setIcon();
         }, err => console.error(err));
     }
     getLocationName() {
@@ -49,8 +51,33 @@ let WeatherComponent = class WeatherComponent {
             console.log("Name ", this.currentLocation); // TODO: REMOVE
         });
     }
+    toggleUnits() {
+        this.toggleTempUnits();
+        this.toggleSpeedUnits();
+    }
+    toggleTempUnits() {
+        if (this.currentTempUnit == "fahrenheit") {
+            this.currentTempUnit = "celsius";
+        }
+        else {
+            this.currentTempUnit = "fahrenheit";
+        }
+    }
+    toggleSpeedUnits() {
+        if (this.currentSpeedUnit == "kph") {
+            this.currentSpeedUnit = "mph";
+        }
+        else {
+            this.currentSpeedUnit = "kph";
+        }
+    }
+    setIcon() {
+        this.icons.add("icon", this.weatherData.icon);
+        this.icons.play();
+    }
 };
 WeatherComponent = __decorate([
+    // There is no TypeScript definition file for the Skycons js library
     core_1.Component({
         moduleId: module.id,
         selector: 'weather-widget',

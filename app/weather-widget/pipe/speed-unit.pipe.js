@@ -13,10 +13,10 @@ let SpeedUnitPipe = class SpeedUnitPipe {
     transform(speed, unitType) {
         switch (unitType) {
             case "mph":
-                const miles = speed * 1.6;
+                const miles = Number(speed * 1.6).toFixed(0);
                 return miles + " mph";
             default:
-                return speed + " kph";
+                return Number(speed).toFixed(0) + " kph";
         }
     }
 };
