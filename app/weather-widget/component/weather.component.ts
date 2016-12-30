@@ -4,6 +4,8 @@ import { WeatherService } from '../service/weather.service';
 
 import { Weather } from '../model/weather';
 
+import { WEATHER_COLORS } from '../constants/constants';
+
 declare var Skycons: any; // There is no TypeScript definition file for the Skycons js library
 
 @Component({
