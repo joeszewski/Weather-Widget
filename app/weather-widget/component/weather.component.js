@@ -50,7 +50,7 @@ let WeatherComponent = class WeatherComponent {
         this.service.getLocationName(this.pos.coords.latitude, this.pos.coords.longitude)
             .subscribe(location => {
             console.log(location); // TODO: REMOVE
-            this.currentLocation = location["results"][3]["formatted_address"]; // Change to array [5] for less detailed location description
+            this.currentLocation = location["results"][1]["formatted_address"]; // Change to array [5] for less detailed location description
             console.log("Name ", this.currentLocation); // TODO: REMOVE
         });
     }
